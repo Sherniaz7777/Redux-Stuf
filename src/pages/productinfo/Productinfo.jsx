@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from "react";
-import "../hero/Hero.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getProductInfo } from "../../store/slices/productInfoSlice";
 import { getProducts } from "../../store/slices/productSlices";
-import Card from "../card/Card";
-import Hero2 from "../hero2/Hero2";
 
-const Hero = () => {
+import Card from "../../components/card/Card";
+import Detail from "../../components/detail/Detail";
+
+const Productinfo = () => {
   const { productsData, isLoading, error } = useSelector(
     (state) => state.product
   );
+  // const { productinfoData } = useSelector(
+  //   (state) => state.productinfo
+  // );
   const [filterData, setFilterData] = useState();
   const [insvible, setinsvible] = useState(true);
+  
+  const params = useParams();
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getProductInfo(params.id));
+  // }, [dispatch]);
+
+  
 
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, [dispatch]);
 
   if (productsData === null) {
     return <h1 style={{textAlign:"center", color:"white"}}>Loading...</h1>;
@@ -36,6 +48,10 @@ const Hero = () => {
     setFilterData(filterCategoriay);
   };
 
+  // if (productinfoData === null) {
+  //   return <h1>Loading...</h1>;
+  // }
+
   return (
     <div>
       <div className="container">
@@ -43,7 +59,7 @@ const Hero = () => {
           <div className="Categoty-Hero">
             <h2>CATEGORIES</h2>
             <li id="Computers">Computers</li>
-            {newcategory.map((el) => (
+            {newcategory?.map((el) => (
               <div key={el.id} className="Category">
                 <li onClick={getCategoryProduct}>{el}</li>
               </div>
@@ -60,7 +76,8 @@ const Hero = () => {
               <p>Terms & Conditions</p>
             </div>
           </div>
-          <Hero2 />
+          
+          <Detail  params={params.id}/>
         </div>
         <div className="Cards">
           <h2>Trending</h2>
@@ -79,8 +96,8 @@ const Hero = () => {
               ?.map((el) => (
                 <div key={el.id}>
                   <Card
-                  el={el}
                     {...el}
+                    el={el}
                     images={el.images[0]}
                     category={el.category.name}
                   />
@@ -88,12 +105,11 @@ const Hero = () => {
               ))
               .slice(0, 4)}
             {insvible &&
-              productsData
-                .map((el) => (
+              productsData?.map((el) => (
                   <div key={el.id}>
                     <Card
-                    el={el}
                       {...el}
+                      el={el}
                       images={el.images[0]}
                       category={el.category.name}
                     />
@@ -110,4 +126,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Productinfo;

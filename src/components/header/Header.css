@@ -46,3 +46,11 @@ nav{
     background: none;
     color: white;
 }
+.basket-header span{
+    position: relative;
+    position: absolute;
+    margin-top: 8px;
+    margin-left: -6px;
+    font-size: 16px;
+    color: white;
+}
