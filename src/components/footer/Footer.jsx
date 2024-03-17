@@ -16,9 +16,9 @@ const Footer = () => {
             <p>Developed by <span>Tomkovich</span></p>
            </div>
            <div className='icons'>
-           <i class="bi bi-youtube"></i>
-           <i class="bi bi-facebook"></i>
-           <i class="bi bi-instagram"></i>
+           <i className="bi bi-youtube"></i>
+           <i className="bi bi-facebook"></i>
+           <i className="bi bi-instagram"></i>
            </div>
         </div>
       </div>
