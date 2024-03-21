@@ -6,7 +6,7 @@ import { calculateTatol, decrementQuantity1, incrementQuantity1, removeFromFavor
 
 const Like = () => {
     const { favoriteData, total } = useSelector((state) => state.like);
-    console.log(favoriteData);
+    // console.log(favoriteData);
     const { productsData, isLoading, error } = useSelector(
       (state) => state.product
     );
