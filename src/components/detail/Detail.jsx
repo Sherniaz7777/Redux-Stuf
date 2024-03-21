@@ -30,8 +30,7 @@ const Detail = ({ params }) => {
         dispatch(addFavorite(el))
      }
 
-  console.log(productinfoData);
-  console.log(params);
+
   return (
     <div className="Detail-all">
       <div className="Detail">

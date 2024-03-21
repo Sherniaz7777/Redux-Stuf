@@ -8,7 +8,7 @@ import {  calculateTatol, decrementQuantity, incrementQuantity, removeCart } fro
 const Cart = () => {
   const { cartData, total } = useSelector((state) => state.cart);
 
-  console.log(cartData);
+  // console.log(cartData);
   const { productsData, isLoading, error } = useSelector(
     (state) => state.product
   );
