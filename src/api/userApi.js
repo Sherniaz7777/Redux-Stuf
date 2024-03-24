@@ -15,6 +15,16 @@ class UserApi{
             }
         })
     }
+    getProfile(token){
+        if (token) {
+            return axios.get("/auth/profile",{
+                headers:
+                {Authorization:`Bearer ${token}`
+            }
+            })
+        }
+    }
+
 }
 
 export default new UserApi

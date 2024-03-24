@@ -9,29 +9,20 @@ import search from "../../imgs/search.svg";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "antd";
-import SignUp from "../signUp/SignUp";
-import SignIn from "../signIn/SignIn";
-import { loginUser } from "../../store/slices/loginSlice";
+import { getUser, loginUser } from "../../store/slices/loginSlice";
 import { postUser } from "../../store/slices/authSlice";
 
-const Header = () => {
+
+const Header = ({ visible3, setisVisible3 }) => {
   const { cartData } = useSelector((state) => state.cart);
   const { favoriteData } = useSelector((state) => state.like);
-  const { accessToken } = useSelector((state) => state.login);
+  const user = useSelector((state) => state.login.accessToken);
   const { dataUser } = useSelector((state) => state.auth);
-  const [content, setContent] = useState("");
-  const [visible, setisVisible] = useState(false);
-  const [visible2, setisVisible2] = useState(false);
+
+
   const dispatch = useDispatch();
 
-  const changeSignIn = () => {
-    setContent("Sign In");
-    setisVisible2(true);
-  };
-  const changeSignUp = () => {
-    setContent("Sign Up");
-    setisVisible(true);
-  };
+  
   useEffect(() => {
     dispatch(postUser());
   }, []);
@@ -39,12 +30,26 @@ const Header = () => {
   useEffect(() => {
     dispatch(loginUser());
   }, []);
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+  if (user === null) {
+    return <h1>Loading...</h1>;
+  }
 
-  const loOut = () => {
-    localStorage.removeItem("SignUp");
+  const loOut = (e) => {
+    location.reload();
+
+    localStorage.removeItem("Token");
   };
 
-  console.log(accessToken);
+  if (user) {
+    setisVisible3(true);
+  } else {
+    setisVisible3(false);
+  }
+
+  console.log(user);
   console.log(dataUser);
 
   return (
@@ -60,26 +65,44 @@ const Header = () => {
 
           <div className="user-header">
             <div className="user-icon" onClick={() => setisVisible(true)}>
-              <img src={user} alt="" />
+              <img
+                style={{ width: 35, borderRadius: "100%" }}
+                src={user?.avatar}
+                alt=""
+              />
             </div>
-            <p>{}</p>
+            <p>{user?.name}</p>
+            {!visible3 && <p>Yana Tamkovich</p>}
             <div style={{ display: "flex", gap: 10 }}>
-              <Button
-                type="primary"
-                danger
-                ghost
-                onClick={() => changeSignIn()}
-              >
-                Sign In
-              </Button>
-              <Button type="primary" danger ghost>
-                {dataUser ? (
-                  <span onClick={() => loOut()}>Log Out</span>
-                ) : (
-                  <span onClick={() => changeSignUp()}>Sign Up</span> 
-                  
+              <NavLink to={"signIn"}>
+                {!visible3 && (
+                  <Button
+                    type="primary"
+                    danger
+                    ghost
+                    onClick={() => changeSignIn()}
+                  >
+                    Sign In
+                  </Button>
                 )}
-              </Button>
+              </NavLink>
+              <NavLink to={"/signUp"}>
+                {!visible3 && (
+                  <Button
+                    type="primary"
+                    danger
+                    ghost
+                    onClick={() => changeSignUp()}
+                  >
+                    Sign Up
+                  </Button>
+                )}
+              </NavLink>
+              {visible3 && (
+                <Button type="primary" danger ghost onClick={loOut}>
+                  Sign Out
+                </Button>
+              )}
             </div>
           </div>
 
@@ -101,12 +124,6 @@ const Header = () => {
           </div>
         </nav>
       </div>
-      {visible && content === "Sign Up" && (
-        <SignUp setisVisible={setisVisible} />
-      )}
-      {visible2 && content === "Sign In" && (
-        <SignIn setisVisible={setisVisible2} />
-      )}
     </header>
   );
 };

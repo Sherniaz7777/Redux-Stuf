@@ -17,7 +17,7 @@ const Card = ({el, title, images, description, category, price, id }) => {
   return (
     <div>
      
-        <div className="card" style={{ width: " 15rem" }}>
+        <div className="card" id="#card" style={{ width: " 15rem" }}>
            <NavLink className='Navlink' to={'/info/' + id} >
           <img
             style={{ width: 238.5 }}
