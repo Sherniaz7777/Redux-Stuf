@@ -15,7 +15,7 @@ async (data) => {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    dataUser: loadStoredData(),
+    dataUser: null,
     isLoading: false,
     error: "",
   },
@@ -26,7 +26,7 @@ const authSlice = createSlice({
     builder.addCase(postUser.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.dataUser = payload.data;
-      localStorage.setItem("SignUp", JSON.stringify(payload));
+      
     });
     builder.addCase(postUser.rejected, (state, {payload})=>{
         state.isLoading=false;

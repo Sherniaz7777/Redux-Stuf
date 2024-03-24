@@ -34,6 +34,7 @@ const Hero = () => {
       (el) => el.category.name === e.target.innerText
     );
     setFilterData(filterCategoriay);
+    
   };
 
   return (
@@ -47,6 +48,7 @@ const Hero = () => {
               <div key={el.id} className="Category">
                 <li onClick={getCategoryProduct}>{el}</li>
               </div>
+              
             ))}
             <div
               style={{
